@@ -6,8 +6,10 @@ const userController=require('../controllers/user');
 
 router.post('/postUser',userController.postUser);
 
+router.get('/GetAllUser',userController.GetAllUser);
+
 router.post('/postRevenue',userController.postRevenue);
 
-router.get('/pastRevenueRecievedByMonth',userController.pastRevenueRecievedByMonth);
+router.post('/pastRevenueRecievedByMonth',userController.pastRevenueRecievedByMonth);
 
 module.exports=router;

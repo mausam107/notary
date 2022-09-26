@@ -41,7 +41,6 @@ exports.postUser=async (req, res, next)=>{
       email:email
     }).save();
     res.json({
-
       data:userData
     })
   } catch (error) {
@@ -52,12 +51,25 @@ exports.postUser=async (req, res, next)=>{
 
 }
 
+exports.GetAllUser = async (req,res,next) =>{
+  try {
+    const AllUser = await User.find({});
+    res.json({
+      data:AllUser
+    })
+  } catch (error) {
+    res.json({})
+  }
+};
+
 exports.postRevenue=async (req, res, next)=>{
   try {
+    const UserID = req.query.UserID;
     const amount=req.body.amount;
     const dataRecieved=new Date().getMonth()
     const no=parseInt(dataRecieved);
     const RevenueData =await new  Revenue({
+      UserID:UserID,
       amount:amount,
       dataRecieved:no
     }).save();
@@ -74,7 +86,8 @@ exports.postRevenue=async (req, res, next)=>{
 
 exports.pastRevenueRecievedByMonth = async (req, res, next) => {
   try {
-    const totalRevenue= await Revenue.find();
+    const UserID = req.query.UserID;
+    const totalRevenue= await Revenue.find({UserID:UserID});
     let totalAmount=0;
     let data={};
     for (let j=0;j<12;j++){
